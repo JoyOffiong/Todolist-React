@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import Input from "./Input";
 import SpanButton from "./SpanButton";
 import axios from "axios";
@@ -8,31 +8,36 @@ function Form({ todos, setTodos }) {
   // console.log("FROM APP.JS ", onsetTodos);
 
   //ADD FUNCTION
-  const addTodo = () => {
+  async function addTodo () {
    
-    // let newTodo = {
-    //   id: crypto.randomUUID(),
-    //   title: todoText,
-    //   completed: false,
-    // };
+   
     // console.log("clickedaddTodo", newTodo);
 
-    
-     const fetchTodos = async () =>{
-       const response = await axios.post("https://jsonplaceholder.typicode.com/todos")
-      
+       const response = await axios
+       .post("https://jsonplaceholder.typicode.com/todos")
+       .then((response)=>{
+        let newTodo = {
+          id: crypto.randomUUID(),
+          title: todoText,
+          completed: false,
+        };
+        setTodos([newTodo,...todos ])
+
+        return response
+      })
   
-       console.log(response.data)
-      setTodos([...todos, response.data])
-      
-     }
+      .catch((error)=>{
+        console.log(error)
+      })
+ 
+     return response
     
-    fetchTodos()
-  useEffect(()=>{
+  //   fetchTodos()
+  // useEffect(()=>{
     
-   fetchTodos();
-   },
-  [])
+  //  fetchTodos();
+  //  },
+  // [])
     
   };
 

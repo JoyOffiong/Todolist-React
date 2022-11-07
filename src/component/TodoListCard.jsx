@@ -8,8 +8,8 @@ function TodoListCard(props) {
   const { todo, todos, setTodos} = props;
 const { id, title, completed } = todo;
 
-  function deleteToDo (){
-  const response = axios
+ async function deleteToDo (){
+  const response = await axios
           .delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
           .then ((response)=>{
               const deleted = todos.filter((todo) => todo.id !== id);
